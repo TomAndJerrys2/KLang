@@ -1,6 +1,7 @@
 #ifndef KLANG_CHUNK_H
 #define KLANG_CHUNK_H
 
+// internal libraries
 #include "common.h"
 
 typedef enum
@@ -18,6 +19,13 @@ typedef struct
 
 // Signatures
 
+// allocate a chunk in memory
 void init_chunk(Chunk *chunk);
+
+// append a byte to the end of a chunk
+void write_chunk(Chunk *chunk, uint8_t byte);
+
+// free the space (chunk) allocated in memory
+void free_chunk(Chunk *chunk);
 
 #endif
