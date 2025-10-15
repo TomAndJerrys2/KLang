@@ -14,16 +14,21 @@ void init_chunk(Chunk *chunk)
     init_value_arr(&chunk->constants);
 }
 
-void write_chunk(Chunk *chunk, uint8_t byte)
+void write_chunk(Chunk *chunk, uint8_t byte, int line)
 {
     if (chunk->capacity < chunk->count + 1)
     {
         int old_capacity = chunk->capacity;
         chunk->capacity = GrowCapacity(old_capacity);
-        chunk->code = GrowArray(uint8_t, chunk->code, old_capacity, chunk->capacity);
+
+        chunk->code = GrowArray(uint8_t, chunk->code,
+                                old_capacity, chunk->capacity);
+        chunk->lines = GrowArray(int, chunk->lines, old_capacity,
+                                 chunk->capacity);
     }
 
     chunk->code[chunk->count] = byte;
+    chunk->lines[chunk->count] = line;
     chunk->count++;
 }
 

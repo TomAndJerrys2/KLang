@@ -28,7 +28,7 @@ typedef struct
 void init_chunk(Chunk *chunk);
 
 // append a byte to the end of a chunk
-void write_chunk(Chunk *chunk, uint8_t byte);
+void write_chunk(Chunk *chunk, uint8_t byte, int line);
 
 // free the space (chunk) allocated in memory
 void free_chunk(Chunk *chunk);
