@@ -1,2 +1,3 @@
 # KLang
-KLang: A Multi-Functional, Low-level Toy Language
+
+# <i>A Mid-Level, Multi-functional Language</i>
