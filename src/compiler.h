@@ -1,6 +1,8 @@
 #ifndef KLANG_COMPILER_H
 #define KLANG_COMPILER_H
 
-void compile(const char *src);
+#include "vm/machine.h"
+
+bool compile(const char *source, Chunk *chunk);
 
 #endif

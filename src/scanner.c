@@ -129,6 +129,14 @@ static void skipWhitespace()
     }
 }
 
+static Token identifier()
+{
+    while (isAlpha(peek()) || isDigit(peek()))
+        advance();
+
+    return make_token(identifierType());
+}
+
 static TokenType check_keyword(int start, int length,
                                const char *rest, TokenType type)
 {
@@ -236,14 +244,6 @@ static TokenType identifier_type()
     }
 
     return TOKEN_IDENTIFIER;
-}
-
-static Token identifier()
-{
-    while (isAlpha(peek()) || isDigit(peek()))
-        advance();
-
-    return make_token(identifierType());
 }
 
 static Token number()
