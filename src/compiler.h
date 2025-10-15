@@ -1,6 +1,6 @@
-#ifndef KLANG_COMPILER_h
-#define KLANG_COMPILER_h
+#ifndef KLANG_COMPILER_H
+#define KLANG_COMPILER_H
 
-void compile(const char *source);
+void compile(const char *src);
 
 #endif
