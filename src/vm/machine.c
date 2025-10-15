@@ -3,6 +3,7 @@
 #include "../common.h"
 #include "../debug.h"
 #include "machine.h"
+#include "compiler.h"
 
 // object-like pattern
 VM vm;
@@ -99,9 +100,8 @@ static InterpretResult run()
 #undef BinaryOp
 }
 
-InterpretResult interpret(Chunk *chunk)
+InterpretResult interpret(const char *src)
 {
-    vm.chunk = chunk;
-    vm.ip = vm.chunk->code;
-    return run();
+    compile(src);
+    return INTERPRET_OK;
 }

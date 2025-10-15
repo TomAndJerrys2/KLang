@@ -30,7 +30,7 @@ typedef enum
 void init_machine();
 void free_machine();
 
-InterpretResult interpret(Chunk *chunk);
+InterpretResult interpret(const char *src);
 
 // VM Stack operations
 void push(Value value);
