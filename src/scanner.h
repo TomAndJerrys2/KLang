@@ -53,7 +53,7 @@ typedef enum
     TOKEN_DOUBLE,
     TOKEN_FLOAT,
 
-    TOKEN_STRING,
+    TOKEN_STR,
     TOKEN_BOOL,
 
     // Unsigned
@@ -63,7 +63,8 @@ typedef enum
     TOKEN_UFLOAT,
 
     TOKEN_VOID,
-    TOKEN_ANY,
+    TOKEN_VECTOR,
+
     TOKEN_WHILE,
 
     TOKEN_ERROR,
