@@ -30,11 +30,38 @@ int disassemble_instruction(Chunk *chunk, int u_offset)
 {
     printf("%04d", u_offset);
 
+    if (u_offset > 0 &&
+        chunk->lines[u_offset] == chunk->lines[u_offset - 1])
+    {
+        printf("   |");
+    }
+    else
+    {
+        printf("%4d ", chunk->lines[u_offset]);
+    }
+
     uint8_t instruction = chunk->code[u_offset];
     switch (instruction)
     {
     case OP_CONSTANT:
         return constantInstruction("OP_CONSTANT", chunk, u_offset);
+
+        // Integral Operations
+    case OP_NEGATE:
+        return simple_instruction("OP_NEGATE", u_offset);
+
+    case OP_ADD:
+        return simpleInstruction("OP_ADDt", u_offset);
+
+    case OP_SUBTRACT:
+        return simpleInstruction("OP_SUBTRACT", u_offset);
+
+    case OP_MULTIPLY:
+        return simpleInstruction("OP_MULTIPLY", u_offset);
+
+    case OP_DIVIDE:
+        return simpleInstruction("OP_DIVIDE", u_offset);
+
     case OP_RETURN:
         return simple_instruction("OP_RETURN", u_offset);
 

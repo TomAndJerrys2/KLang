@@ -48,12 +48,12 @@ as C for reference, as its the language that KLang is built from and draws from.
 // - KLang -
 
 // Common Types
-int // Represents Generic number
-char // Represents an ASCII character or its associated numerical value
-double // Represents a large decimal
-float // Represents a small
-string // Represents a set of characters
-bool // represents a true or false value
+Int // Represents Generic number
+Char // Represents an ASCII character or its associated numerical value
+Double // Represents a large decimal
+Float // Represents a small
+String // Represents a set of characters
+Bool // represents a true or false value
 
 /* all integral types are signed by default - to each numerical type
  * there is an unsigned counterpart, as its own keyword specifying positive values only.
@@ -67,13 +67,14 @@ bool // represents a true or false value
 
 // Special Types
 null // absence of an assigned value
-
+any // resembles a type of any integral value
+void // a type that has yet to be casted
 
 ```
 
-
-
 # - Variables & Constants -
+
+
 
 # - Type Conversions, Alias' and Deductions -
 
