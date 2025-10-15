@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "common.h"
 #include "compiler.h"
@@ -10,12 +11,40 @@ typedef struct
     Token previous;
 
     bool had_err;
+    bool pnc; // panic
 } Parser;
+
+typedef enum
+{
+    PREC_NONE,
+    PREC_ASSIGNMENT, // =
+    PREC_OR,         // or
+    PREC_AND,        // and
+    PREC_EQUALITY,   // == !=
+    PREC_COMPARISON, // < > <= >=
+    PREC_TERM,       // + -
+    PREC_FACTOR,     // * /
+    PREC_UNARY,      // ! -
+    PREC_CALL,       // . ()
+    PREC_PRIMARY
+} Precedence;
 
 Parser parser;
 
+Chunk *compilingChunk;
+
+static Chunk *current_chunk()
+{
+    return compilingChunk;
+}
+
 static void error_at(Token *token, const char *message)
 {
+    if (parser.pnc)
+        return;
+
+    parser.pnc = true;
+
     fprintf(stderr, "[line %d] Error", token->line);
 
     if (token->type == TOKEN_EOF)
@@ -51,39 +80,117 @@ static void advance()
 
     for (;;)
     {
-        parser.current = scanToken();
+        parser.current = scan_token();
         if (parser.current.type != TOKEN_ERROR)
             break;
 
-        errorAtCurrent(parser.current.start);
+        error_at_current(parser.current.start);
     }
+}
+
+static void consume(TokenType type, const char *message)
+{
+    if (parser.current.type == type)
+    {
+        advance();
+        return;
+    }
+
+    error_at_current(message);
+}
+
+static void emit_byte(uint8_t byte)
+{
+    write_chunk(current_chunk(), byte, parser.previous.line);
+}
+
+static void emit_bytes(uint8_t byte1, uint8_t byte2)
+{
+    emitByte(byte1);
+    emitByte(byte2);
+}
+
+static void emit_return()
+{
+    emit_byte(OP_RETURN);
+}
+
+static uint8_t make_constant(Value value)
+{
+    int constant = add_constant(current_chunk(), value);
+
+    if (constant > UINT8_MAX)
+    {
+        error("Too many constants in one chunk.");
+        return 0;
+    }
+
+    return (uint8_t)constant;
+}
+
+static void emit_constant(Value value)
+{
+    emit_bytes(OP_CONSTANT, make_constant(value));
+}
+
+static void end_compiler()
+{
+    emit_return();
+}
+
+static void expression()
+{
+    // later
+}
+
+static void grouping()
+{
+    expression();
+    consume(TOKEN_RIGHT_PAREN, "Expect ')' after expression.");
+}
+
+static void number()
+{
+    double value = strtod(parser.previous.start, NULL);
+    emit_constant(value);
+}
+
+static void unary()
+{
+    TokenType operatorType = parser.previous.type;
+
+    // Compile the operand
+    expression();
+
+    // Emit the operator instruction.
+    switch (operatorType)
+    {
+    case TOKEN_MINUS:
+        emitByte(OP_NEGATE);
+        break;
+    default:
+        return; // Unreachable
+    }
+}
+
+static void parse_precedence(Precedence precedence)
+{
+    // later
 }
 
 bool compile(const char *src, Chunk *chunk)
 {
     init_scanner(src);
+    compilingChunk = chunk;
+
+    parser.had_err = false;
+    parser.pnc = false;
 
     advance();
     expression();
     consume(TOKEN_EOF, "Expect EOE //");
 
-    int line = -1;
-    for (;;)
-    {
-        Token token = scan_token();
-        if (token.line != line)
-        {
-            printf("%4d", token.line);
-            line = token.line;
-        }
-        else
-        {
-            printf("   |");
-        }
+    end_compiler();
 
-        printf("%2d '%.*s'\n", token.type, token.length, token.start);
-
-        if (token.type == TOKEN_EOF)
-            break;
-    }
+    return !parser.had_err;
 }
