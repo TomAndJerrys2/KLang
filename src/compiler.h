@@ -1,5 +1,5 @@
-#ifndef clox_compiler_h
-#define clox_compiler_h
+#ifndef KLANG_COMPILER_h
+#define KLANG_COMPILER_h
 
 void compile(const char *source);
 
