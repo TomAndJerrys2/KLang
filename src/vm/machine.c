@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "../common.h"
 #include "../debug.h"
@@ -11,6 +12,21 @@ VM vm;
 static void reset_stack()
 {
     vm.stack_top = vm.stack;
+}
+
+static void runtime_error(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
+    fputs("\n", stderr);
+
+    size_t instruction = vm.ip - vm.chunk->code - 1;
+    int line = vm.chunk->lines[instruction];
+
+    fprintf(stderr, "[line %d] in script\n", line);
+    reset_stack();
 }
 
 void init_machine()
@@ -32,10 +48,28 @@ Value pop()
     return *vm.stack_top--;
 }
 
+static Value peek(int distance)
+{
+    return vm.stack_top[-1 - distance];
+}
+
 static InterpretResult run()
 {
 #define ReadByte() (*vm.ip++)
 #define ReadConstant() (vm.chunk->constants.values[ReadByte()])
+
+#define BINARY_OP(valueType, op)                        \
+    do                                                  \
+    {                                                   \
+        if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) \
+        {                                               \
+            runtimeError("Operands must be numbers.");  \
+            return INTERPRET_RUNTIME_ERROR;             \
+        }                                               \
+        double b = AS_NUMBER(pop());                    \
+        double a = AS_NUMBER(pop());                    \
+        push(value_type(a op b));                       \
+    } while (false)
 
 #define BinaryOp(operation)  \
     do                       \
@@ -86,6 +120,15 @@ static InterpretResult run()
 
         case OP_DIVIDE:
             BinaryOp(/);
+            break;
+
+        case OP_NEGATE:
+            if (!IS_NUMBER(peek(0)))
+            {
+                runtimeError("Operand must be a number.");
+                return INTERPRET_RUNTIME_ERROR;
+            }
+            push(NUMBER_VAL(-AS_NUMBER(pop())));
             break;
 
         case OP_RETURN:
