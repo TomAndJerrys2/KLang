@@ -47,20 +47,41 @@ int disassemble_instruction(Chunk *chunk, int u_offset)
         return constantInstruction("OP_CONSTANT", chunk, u_offset);
 
         // Integral Operations
+    case OP_NOT:
+        return simple_istruction("OP_NOT", u_offset);
+
     case OP_NEGATE:
         return simple_instruction("OP_NEGATE", u_offset);
 
+    case OP_NULL:
+        return simple_instruction("OP_NIL", u_offset);
+
+    case OP_TRUE:
+        return simple_instruction("OP_TRUE", u_offset);
+
+    case OP_FALSE:
+        return simple_instruction("OP_FALSE", u_offset);
+
+    case OP_EQUAL:
+        return simple_instruction("OP_EQUAL", u_offset);
+
+    case OP_GREATER:
+        return simple_instruction("OP_GREATER", u_offset);
+
+    case OP_LESS:
+        return simple_instruction("OP_LESS", u_offset);
+
     case OP_ADD:
-        return simpleInstruction("OP_ADDt", u_offset);
+        return simple_instruction("OP_ADDt", u_offset);
 
     case OP_SUBTRACT:
-        return simpleInstruction("OP_SUBTRACT", u_offset);
+        return simple_instruction("OP_SUBTRACT", u_offset);
 
     case OP_MULTIPLY:
-        return simpleInstruction("OP_MULTIPLY", u_offset);
+        return simple_instruction("OP_MULTIPLY", u_offset);
 
     case OP_DIVIDE:
-        return simpleInstruction("OP_DIVIDE", u_offset);
+        return simple_instruction("OP_DIVIDE", u_offset);
 
     case OP_RETURN:
         return simple_instruction("OP_RETURN", u_offset);

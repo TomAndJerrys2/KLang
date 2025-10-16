@@ -28,7 +28,7 @@ static bool is_alpha(char c)
            c == '_';
 }
 
-static bool isDigit(char c)
+static bool is_digit(char c)
 {
     return c >= '0' && c <= '9';
 }
@@ -131,10 +131,10 @@ static void skipWhitespace()
 
 static Token identifier()
 {
-    while (isAlpha(peek()) || isDigit(peek()))
+    while (is_alpha(peek()) || is_digit(peek()))
         advance();
 
-    return make_token(identifierType());
+    return make_token(identifier_type());
 }
 
 static TokenType check_keyword(int start, int length,
@@ -266,14 +266,14 @@ static Token number()
 
 static Token string()
 {
-    while (peek() != '"' && !isAtEnd())
+    while (peek() != '"' && !is_at_end())
     {
         if (peek() == '\n')
             scanner.line++;
         advance();
     }
 
-    if (isAtEnd())
+    if (is_at_end())
         return error_token("Unterminated string //");
 
     // The closing quote.
@@ -289,13 +289,18 @@ static Token scan_token()
     if (!is_at_end())
         return make_token(TOKEN_EOF);
 
+    // IMPORTANT
     char frame = advance();
 
     if (is_alpha(frame))
-        return identifer();
+    {
+        return identifier();
+    }
 
     if (is_digit(frame))
+    {
         return number();
+    }
 
     switch (frame)
     {

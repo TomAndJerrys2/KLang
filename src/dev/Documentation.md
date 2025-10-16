@@ -74,7 +74,44 @@ void // a type that has yet to be casted
 
 # - Variables & Constants -
 
+#2: All statements in KLang end with a semi-colon and start with a static
+type just like C. This makes things easier at runtime.
 
+Variable declaration:
+
+```js
+ //
+ //
+ // <type> [name];
+ //
+ // <type> [name] = [value]; <- of type
+ //
+ //
+ // <type> [name] = null;
+
+ int my_num = -1000000; 
+
+ uint positive_num = 67;
+
+
+ char my_character = 'c'; // characters use '', unlike strings which use ""
+
+ uchar my_positive_character = 14; // characters can take number values
+                                   // as usual following the ASCII convention
+
+ // Important Note: Following convention, while not strict - the KLang
+ // Compiler has a pretty robust error checker. This is where the inspiration
+ // from Rust comes from and ultimately Special Characters such as newlines
+ // tabs, etc. should also be placed in character tags to avoid unnecessary
+ // conversions at compile time
+
+ float my_decimal = -1.2; // floats do not require the 'f' postfix
+ ufloat my_pos_decimal = 1.2;
+
+ double my_bigger_decimal = -1.123412341234;
+ udouble my_bigger_pos_number
+
+```
 
 # - Type Conversions, Alias' and Deductions -
 

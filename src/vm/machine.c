@@ -6,8 +6,10 @@
 #include "machine.h"
 #include "compiler.h"
 
-// object-like pattern
+// <--
 VM vm;
+
+// -------------------------------------------------------------
 
 static void reset_stack()
 {
@@ -36,6 +38,8 @@ void init_machine()
 
 void free_machine() {}
 
+// -------------------------------------------------------------
+
 void push(Value value)
 {
     *vm.stack_top = value;
@@ -53,17 +57,26 @@ static Value peek(int distance)
     return vm.stack_top[-1 - distance];
 }
 
+static bool is_falsey(Value value)
+{
+    return IS_NIL(value) || (IS_BOOL(value) && !AS_BOOL(value));
+}
+
+// -------------------------------------------------------------
+
 static InterpretResult run()
 {
 #define ReadByte() (*vm.ip++)
 #define ReadConstant() (vm.chunk->constants.values[ReadByte()])
 
-#define BINARY_OP(valueType, op)                        \
+    // -------------------------------------------------------------
+
+#define BinaryOP(value_type, op)                        \
     do                                                  \
     {                                                   \
         if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) \
         {                                               \
-            runtimeError("Operands must be numbers.");  \
+            runtime_error("Operands must be numbers."); \
             return INTERPRET_RUNTIME_ERROR;             \
         }                                               \
         double b = AS_NUMBER(pop());                    \
@@ -71,13 +84,15 @@ static InterpretResult run()
         push(value_type(a op b));                       \
     } while (false)
 
-#define BinaryOp(operation)  \
-    do                       \
-    {                        \
-        double b = pop();    \
-        double a = pop();    \
-        push(a operation b); \
-    } while (false)
+    /*    #define BINARY_OP(operation) \
+        do                       \
+        {                        \
+            double b = pop();    \
+            double a = pop();    \
+            push(a operation b); \
+        } while (false)*/
+
+    // -------------------------------------------------------------
 
     for (;;)
     {
@@ -94,6 +109,9 @@ static InterpretResult run()
 
         disassemble_instruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
 #endif
+
+        // -------------------------------------------------------------
+
         uint8_t instruction;
         switch (instruction = ReadByte())
         {
@@ -102,24 +120,51 @@ static InterpretResult run()
             push(constant);
             break;
 
-        case OP_NEGATE:
-            push(-pop());
+        case OP_GREATER:
+            BinaryOP(BOOL_VAL, >);
             break;
 
+        case OP_LESS:
+            BinaryOP(BOOL_VAL, <);
+            break;
+
+        case OP_NULL:
+            push(NIL_VAL);
+            break;
+        case OP_FALSE:
+            push(BOOL_VAL(false));
+            break;
+
+        case OP_TRUE:
+            push(BOOL_VAL(true));
+            break;
+
+        case OP_EQUAL:
+        {
+            Value b = pop();
+            Value a = pop();
+            push(BOOL_VAL(valuesEqual(a, b)));
+            break;
+        }
+
         case OP_ADD:
-            BinaryOp(+);
+            BinaryOP(NUMBER_VAL, +);
             break;
 
         case OP_SUBTRACT:
-            BinaryOp(-);
+            BinaryOP(NUMBER_VAL, -);
             break;
 
         case OP_MULTIPLY:
-            BinaryOp(*);
+            BinaryOP(NUMBER_VAL, *);
             break;
 
         case OP_DIVIDE:
-            BinaryOp(/);
+            BinaryOP(NUMBER_VAL, /);
+            break;
+
+        case OP_NOT:
+            push(BOOL_VAL(is_falsey(pop())));
             break;
 
         case OP_NEGATE:
@@ -140,7 +185,7 @@ static InterpretResult run()
 
 #undef ReadByte
 #undef ReadConstant
-#undef BinaryOp
+#undef BINARY_OP
 }
 
 InterpretResult interpret(const char *src)
