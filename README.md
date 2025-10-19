@@ -2,10 +2,10 @@
 
 # <i>A Mid-Level, Multi-functional Language</i>
 
-"I'm trying to add new and interesting stuff everyday - An error message isn't to bad but thousands of them make you question
-why on earth you would ever make a language. It's not supposed to be revolutionary just tidy and useful. Because tidy and
-useful is all anyone ever wanted. Everythings included and the stuff that isn't. Well. The language let's you dream big
-so get to it" - <i>Kyle Brady 2025</i>
+"I'm trying to add new and interesting stuff everyday - An error message isn't too bad but thousands of them make you question
+why on earth you would ever make a language. It's not supposed to be revolutionary just tidy and useful. That and relatively
+easy to understand. For the most part programmers from any level shouldn't be jumping hoops and hurdles to understand code,
+it should be like reading a story, the better the story, the better the impact" - <i>Kyle Brady 2025</i>
 
 KLang was made as a side-project inspired by the will and curiosity of the cogs and wheels that drive the everyday compiler.
 Since picking up the interest it's been interesting to see how each piece works and how, eventually, it does all fit together
@@ -13,6 +13,91 @@ in a nice neat picture. While not necessary, KLang was made to support an array 
 to Game Development and Database management. The Syntax and Compile resemnble and are built from C. Pure C. Nothing more or
 nothing less was needed. While the language itself bears features to others like rust and C++, it keeps in its own lane and
 hopefully has some use for problem's I have yet to encounter. Mabye for you too.
+
+Pre-Determining Goals for this side project wasn't something I had thought to outline. I was wrong clearly as when it comes
+to scoping everything from syntax to errors and I think I had settled on the idea a long time before I had conciously been 
+aware of it. Thus to make a more solid piece of technology I took the Low-level aspects of C++ and Rust and transformed them
+into what I thought was a less abstract, simpler language with a means to reach more areas.
+
+Sample Program:
+
+```
+// Note: No ';' is needed when ending a using statement
+
+#config.visible=false
+
+// # is used to make a config statement - these are used liked macros in C and contain a lot of useful
+// additives like: #config.entry when specified above a function makes that function the entry point or the "main" function
+
+using std:types
+using std:io
+
+// Blueprints act almost identical to interfaces
+// Provides for more rigid definitions
+Blueprint Animal {
+  // Note only methods that must be defined are needed here
+  init();
+  void make_sound();
+  destroy();
+}
+
+// Class Definition
+// With Custom Types (Known as Traits in KLang)
+class Animal <AnimalType, Noise> {
+
+  // attribute definitions
+  private AnimalType animal_type;
+  private int age;
+  private string name;
+
+  // accessible when inherited
+  protected Noise noise;
+
+  // default constructor
+  init(string _name, int _age, AnimalType _animal_type) {
+    this.name = _name;
+    this._age = _age;
+    this.animal_type = _animal_type;
+
+    console.print("Object Initialized\n");
+  }
+
+  // Methods
+
+  public void make_sound(Noise noise) {
+    // wrapper class string using the to string method from std:types
+    console.print(String.ToString(noise));
+  }
+
+  // Encapsulation - Getters and Setters
+  public Noise get_noise() {
+    return noise;
+  }
+
+  protected void set_noise(Noise new_noise) {
+    this.noise = new_noise;
+  }
+
+  // default destructor
+  destroy() {
+    console.print("Object DeInitialized!\n");
+  }
+}
+
+class Cat : class Animal {
+  // ... Cat inherits behaviour from Animal
+}
+
+// Main function acts as an entry point when labelled with a config label
+
+#config.entry
+main() {
+
+  //
+  Animal my_animal = new Animal()
+}
+
+```
 
 # Installation
 # - Requirements
@@ -179,6 +264,8 @@ desktop applications. All tools should be available in one place.
   - `using std:time` Time and date library
   - `using std:thread` Threading library for Multi-Thread Procedures
   - `using std:types` Wrapper Classes
+  - `using std:io` Input / Output Library
+  - `using std:file` File Management Library
     
   - And much more - most will take time to add and most are not even included here. All available libraries can be found
   - and installed using KPackager (the KLang Package Manager)
