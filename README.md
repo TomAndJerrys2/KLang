@@ -168,11 +168,13 @@ function start_func() {
   -
 
 # Installation Via Klang Wizard
-  -
-  -
-  -
-  -
-  -
+  - Using the KLang Wizard is much easier, but does require stable internet connection
+  - Install the KLang Wizard from the Releases tab section
+  - Once open, select continue
+  - Now it should ask what you would like to install: select all options
+    - This will install KPackager, KLang, Kyode and all libraries necessary
+  - After installing click finish as you are now ready to use KLang
+  - Open Kyode or your Terminal and get developing!
 
 # Goals
 - Strongly Typed, memory safe definitions
@@ -377,12 +379,65 @@ language natively, seems like a much smoother idea. That doesnt go without sayin
 can't be made, as they very much can be using the `config visible=true`
 
 # KPackager
+<i>"KPackager is the default Package Manager for KLang used for installing and publishing external libraries, creating projects,
+managing KLang Frameworks and Packages"</i>
 
-TBD
+KPackager allows us to extend the KLang language and add features to make our environment and code richer and robust. With this
+extension external libraries are available to be published and installed via its service. But most importantly it allows you to
+create and record projects and take advantage of frameworks.
+
+- Frameworks:
+  - Component-Based Web Applications using: Evo
+  - Game Development Framework using: Play
+  - Application and GUI Framework using: App
+
+Projects built with evo and app will notice something familiar. While the main functionality is transmitted in KLang, the "View"
+used in applications and websites takes advantage of a special HTML Rendering which can be stylised with regular CSS. Using HTML/CSS
+this way for driving the front end of KLang Based Web Applications and Desktop applications meant that the structure was highly versatile
+and very easily changeable integrating with already existing technology.
 
 # Use with Kyode or The Coffee Editor
 
-TBD
+The Coffee Editor is another project of mine and can be found and installed from its repository from my profile! Another project
+thats built in Pure C for the sole fact that it makes for a more maintainable project and is more well versed and structured for
+memory management and graphical rendering. The Coffee Editor is a great editor with built in intellisense and syntax highlighting
+for an array of supported languages (Python, JS/TS, C/C#/C++, Java, Lua, Ruby, Rust, Go, ... etc) however; while it contains many useful
+features, most of which I took inspiration from Visual Studio Code and Notepad++, CoffeeEditor remains only a text editor.
+
+Kyode is a project that follow The Coffee Editor to try make and all-in-one exclusive environment. Visual Studio has been and is known to be
+a remarkable and powerful tool to leverage, that being said KLang didn't have any support anywhere else considering that it hasnt been and probably
+wont be adopted by a large quantity of developers. Kyode comes in as a Fast and reliable IDE and Solutions environment where KLang Development should
+be made easier
+
+Kyode Features:
+- Intellisense and customisable, smart highlighting (keywords and definitions)
+- Integrated Terminal with Built-in Command Line Tools which include (not exclusive too):
+  - KLang Native Compiler (Dist: Linux\Windows\AuraOS)
+    -> use `C:\user_name\Desktop>klang file_name.k` which compiles to `file_name.o`
+    -> Note: Like C output files have to be assembled into executables
+    -> or `C:\user_name\Desktop>klang file_name.k -o new_name` to change the output files name
+
+    Windows:
+      `>file_name.exe`
+    
+    Linux/MacOS:
+      `>./file_name`
+    
+    AuraOS:
+    `>file_name.app`
+
+- Explorer, Property, File-Structure, Libraries, Extensions and Settings Windows built-in and found in the toolbar
+- Compiler and Runtime Errors, Warnings and Suggestions Optimized for Readability
+- Library and Package management natively built-in
+- Programmable Macros and Custom Bindings
+- Expanded File-Tree and Explorer with built in task bars
+
+You'll Notice Aura OS is mentioned - this being one of my biggest projects up to date and relatively new compared to KLang so
+I Decided to make a flexible, user-friendly experience that was fully customisable and most importantly isolated and secure.
+The AuraOS Kernel directly uses the KLang Conpiler to use and run KLang, This way KLang run on AuraOS is slightly different to
+builds that run on Microsoft and Linux for example. KLang can use AuraOS modules which can access special functions and system calls
+defined by the kernel. Not only this but my vision was to have a personal operating system in which applications where secure, fast,
+reliable and useful but most importantly built in KLang
 
 # Documentation
 
@@ -475,6 +530,12 @@ End
 ```
 
 - Official Documentation will be available at: www.kylebrady/klang-docs/book.co.uk
+
+Documentation contains the Book and Library information about the language and is updated weekly,
+While the Documentation is fruitful - KLang is still relatively new to commerical use and is still
+being worked on to shine to its fullest
+
+Last Updated: 19/10/2025
 
 # Changelog - Version 1.03 (3rd Iteration)
 
