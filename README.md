@@ -43,36 +43,36 @@ desktop applications. All tools should be available in one place.
   - Private, Public and Protected are specified as a trait to affect the visibility of attributes.
     - i.e `protected int myVal = 10; public string myName = "Kyle";`
    
-  - KLang comes with a lot of features built-in natively to make things smoother.
-    -> One thing is In-Built Objects to make certain processes quicker for the progranner
-    -> `Stack, Queue, Hashmap, Dict, Vec2, Vec3, MinHeap, MaxHeap, Tree, BinTree, Graph`
-        - Notice Items Like: `Map, List, DoublyLinkedList, CircularLinkedList, LinkedList`
-        - are not listed as they are not generic and can be found in `std:structure`
-    -> Typing for each is specified by a 'Trait' which is used for custom types
-    -> i.e defining a stack would include: `Stack<int> myStack = {};`
-    -> All Trait types use '<>' and is to be specified on the type
-    -> If not type is specified for example: `Stack myStack = {};`
-    -> A type will be allocated forr it depending on the size at runtime, to access this type by default its called `CustomType`.
+- KLang comes with a lot of features built-in natively to make things smoother.
+  -> One thing is In-Built Objects to make certain processes quicker for the progranner
+  -> `Stack, Queue, Hashmap, Dict, Vec2, Vec3, MinHeap, MaxHeap, Tree, BinTree, Graph`
+      - Notice Items Like: `Map, List, DoublyLinkedList, CircularLinkedList, LinkedList`
+      - are not listed as they are not generic and can be found in `std:structure`
+      -> Typing for each is specified by a 'Trait' which is used for custom types
+      -> i.e defining a stack would include: `Stack<int> myStack = {};`
+      -> All Trait types use '<>' and is to be specified on the type
+      -> If not type is specified for example: `Stack myStack = {};`
+      -> A type will be allocated forr it depending on the size at runtime, to access this type by default its called `CustomType`.
 
-    -> All In-Built Structures come with built-in memory and error handling that will be optimized every week
-  - Data Structures and Wrapper Classes Built-in
-  - Fast type conversion and coercion -> using C Styled conversion
-    - i.e `float myFloatConverted = 1.2;`
-    - ->  `IntFromFloat = (int)myFloatConverted;`
-    - or even just: `int intTOfloat = (int)(1.2);`
-  - Lightweight and Funtionality Focused
-  - Designed for Safe Low-Level Programming that can be utilized where ever it is put
-    - In the standard library namespace, there exists a list of libraries that are stored
-    - and similar class inheritence ("::") should be accessed through ":".
-    - i.e `using std:game` for the game library
-    - `using std:http` for http instructions / web server development
-    - `using std:window` Library built for custom GUI building
-    - `using math` The KLang Math library (not found in standard)
-    - `using std:sockets` the Sockets library for network communication
-    - `using std:memory` Memory Library that includes allocating, reallocating, freeing and cleaning up memory
-    - `using std:sys` System Library that can be used to make system calls and make changes to the os
-    - And much more - most will take time to add and most are not even included here. All available libraries can be found
-    - and installed using KPacker (the KLang Package Manager)
+  -> All In-Built Structures come with built-in memory and error handling that will be optimized every week
+- Data Structures and Wrapper Classes Built-in
+- Fast type conversion and coercion -> using C Styled conversion
+  - i.e `float myFloatConverted = 1.2;`
+  - ->  `IntFromFloat = (int)myFloatConverted;`
+  - or even just: `int intTOfloat = (int)(1.2);`
+- Lightweight and Funtionality Focused
+- Designed for Safe Low-Level Programming that can be utilized where ever it is put
+  - In the standard library namespace, there exists a list of libraries that are stored
+  - and similar class inheritence ("::") should be accessed through ":".
+  - i.e `using std:game` for the game library
+  - `using std:http` for http instructions / web server development
+  - `using std:window` Library built for custom GUI building
+  - `using math` The KLang Math library (not found in standard)
+  - `using std:sockets` the Sockets library for network communication
+  - - `using std:memory` Memory Library that includes allocating, reallocating, freeing and cleaning up memory
+  - `using std:sys` System Library that can be used to make system calls and make changes to the os
+  - And much more - most will take time to add and most are not even included here. All available libraries can be found
+  - and installed using KPacker (the KLang Package Manager)
 
 # Libraries
 
