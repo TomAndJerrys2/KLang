@@ -4,6 +4,7 @@
 #include "common.h"
 
 typedef struct Obj Obj;
+typedef struct ObjString ObjString;
 
 typedef enum
 {
@@ -11,7 +12,8 @@ typedef enum
     VAL_NULL,
     VAL_NUMBER,
 
-    VAL_OBJ
+    VAL_OBJ,
+
 } ValueType;
 
 typedef struct

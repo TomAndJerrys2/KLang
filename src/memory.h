@@ -2,6 +2,11 @@
 #define KLANG_MEMORY_H
 
 #include "common.h"
+#include "object.h"
+#include "vm.h"
+
+#define ALLOCATE(type, count) \
+    (type *)ralloc(NULL, 0, sizeof(type) * (count))
 
 #define GrowCapacity(capacity) \
     ((capacity) < 8 ? 8 : (capacity) * 2)
@@ -12,6 +17,8 @@
 
 #define FreeArray(type, ptr, old_count) \
     ralloc(ptr, sizeof(type) * (old_count), 0)
+
+#define FREE(type, pointer) ralloc(pointer, sizeof(type), 0)
 
 void *ralloc(void *ptr, size_t old_size, size_t new_size);
 
@@ -28,5 +35,7 @@ void *k_ralloc(void *ptr, unsigned int new_size);
  *  for chunks and fragmented memory
  */
 void k_dealloc(void *ptr);
+
+void freeObjects();
 
 #endif
