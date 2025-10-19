@@ -11,6 +11,8 @@ VM vm;
 
 // -------------------------------------------------------------
 
+// static void vm_info();
+
 static void reset_stack()
 {
     vm.stack_top = vm.stack;

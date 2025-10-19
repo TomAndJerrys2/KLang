@@ -109,9 +109,18 @@ Variable declaration:
  ufloat my_pos_decimal = 1.2;
 
  double my_bigger_decimal = -1.123412341234;
- udouble my_bigger_pos_number
+ udouble my_bigger_pos_number;
 
-```
+ // like c:
+
+ void my_var = (int)(20);
+
+ // while very arbitrary it holds the same principle
+ 
+ // Being a language I wanted to be performant and be
+ // a multi-use tool. Pointers (and smart pointers which
+ // can be found in std. We'll cover more on that later
+ ```
 
 # - Type Conversions, Alias' and Deductions -
 
