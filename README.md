@@ -2,6 +2,10 @@
 
 # <i>A Mid-Level, Multi-functional Language</i>
 
+```
+  io.write("Hello, World!\n");
+```
+
 "I'm trying to add new and interesting stuff everyday - An error message isn't too bad but thousands of them make you question
 why on earth you would ever make a language. It's not supposed to be revolutionary just tidy and useful. That and relatively
 easy to understand. For the most part programmers from any level shouldn't be jumping hoops and hurdles to understand code,
@@ -32,10 +36,11 @@ Sample Program:
 using std:types
 using std:io
 
-// Typename in KLang is used as a sort of Type Sorted. It allows multiple possible types to be stored in a
-// Custom, Allocated Object - Seemlessly All Memory Freeing is done automatically by the garbage collector at
-// runtime and specifying the cleanup() inbuilt function thats included in memory along with: ALLOC, REALLOC, FREE
-typename AnimalType as [string];
+// Typename in KLang is used as a sort-of Type Alias.
+// It allows multiple possible types to be stored in a Custom, Allocated Object
+// Seemlessly All Memory Freeing is done automatically by the garbage collector at exit
+// and Runtime (specifying the cleanup() inbuilt function)
+typename AnimalType as [string]; 
 
 // specifies the data your Custom type can hold
 // this is what makes KLang special as custom types can be made as anything
@@ -44,7 +49,7 @@ typename AnimalType as [string];
 // Note the syntax goes as follows where a list of types that can be taken are listed
 // with ... being like a wildcard for being able to pass any type
 // this means objects are able to be passed making for some cool behaviour we will look into later
-typename Noise as [string];
+typename Noise as [...]; // can take any type upon assignment (can take extra time to allocate at runtime)
 
 // Blueprints act almost identical to interfaces
 // Provides for more rigid definitions
@@ -117,10 +122,23 @@ function start_func() {
   // the freeing on objects is handled automatically with the cleanup function
 
 
-  Animal my_cat = new Cat(); 
+  Animal my_cat = new Cat();
+  // or Animal my_cat(...); - direct init
+  // All wrapper types are dynamic - one less thing to memory manage :)
+  Stack<class Temp> my_objs_alloc;
 
-  // stack of allocated objects
-  Stack<typename Temp> my_objs_alloc
+  my_objs_alloc.push(&my_cat);
+  Cat my_Cat = my_objs_alloc.pop();
+
+  // Variable Ownership comes under scoping (global and local variables) which is
+     the same as almost every language
+
+  // Value Ownership, especially when in regards to Objects is a bit different
+  // obj1 = value;
+  // obj2 = obj1; <- obj1s value is copied into obj2 meaning obj1 still keeps its value
+  // Object Special Functions TBA are: CPY, MOV, 
+    // CPY: Copies an objects value into another object of a similar or derrived type (borrowing value)
+    // MOV: Moves an objects value into another object (ownership change)
 
   // Called for handling Objects at end of life
   cleanup(Animal);
@@ -174,8 +192,12 @@ desktop applications. All tools should be available in one place.
 
 - Staticly Typed
   - `int, float, double, char, string, bool` << all fundamental types (natively signed)
-  - `uint, ufloat, double, char` << unsigned integral types
-  - `null, void, class, public, private, protected`
+  - `uint, ufloat, udouble, uchar` << unsigned integral types
+  - `null, void, class, typename, as, using, namespace, in, true, false, export` Other Keywords
+  - `public, private, protected, const` Specifiers
+ 
+- Constant variables or types are defined with the descriptor "const"
+  i.e `const double PI = 3.14159263;`
   
 - Object-Oriented Programming
   - Classes are defined as usual, specifying the "class" keyword.
@@ -286,7 +308,7 @@ desktop applications. All tools should be available in one place.
 
   - Structs and Enums are to be added in later patches as the language just doesn't require them at the moment
 
-  `
+  ```
   // If nothing is passed when an object is made - Custom types collapse into void
   class Vehicle<class Type, class Model> {
     public string year;
@@ -304,7 +326,7 @@ desktop applications. All tools should be available in one place.
     ...
   }
     
-  `
+  ```
 - Making OOP more presentable and less of a spaghetti mess was a primary goal and only including useful and elegant features as solutions was the only way
   to make it less convoluted and over-engineered. Hence why OOP in KLang stays relatively simple Objects are just bigger types, Generics and typenames are
   used in regard to these to make dynamic type processing easier.
@@ -334,6 +356,7 @@ desktop applications. All tools should be available in one place.
   - `using std:types` Wrapper Classes
   - `using std:io` Input / Output Library
   - `using std:file` File Management Library
+  - `using std:err` Error Handling Library (Includes Exceptions and Check classes)
     
   - And much more - most will take time to add and most are not even included here. All available libraries can be found
   - and installed using KPackager (the KLang Package Manager)
@@ -359,8 +382,97 @@ TBD
 
 # Use with Kyode or The Coffee Editor
 
+TBD
 
 # Documentation
+
+``` KLang Documentation - Found in my Personal Portfolio
+
+Chapters:
+1 - Introduction
+  1.1 - Authors Notes
+  1.2 - Purposeful or Poetic?
+  1.3 - It's not Better - But it is cooler
+2 - The KLang Compiler
+  2.1 - The Inner Machine
+  2.2 - KLang Syntax
+  2.3 - The Debugger
+  2.4 - Error Handling
+  2.5 - Side Notes
+3 - Values, Variables and Constants
+  3.1 - Internal Types
+  3.2 - Variables
+  3.3 - Constants
+  3.4 - Pointers
+  3.5 - Input / Output: using std:io
+  3.6 - Type Casting
+4 - Pointers and Memory
+  4.1 - More on Pointers
+  4.2 - References
+  4.3 - Pass by Reference vs Pass by Value
+  4.4 - Function Pointers
+  4.5 - Object Pointers
+  4.6 - Smart Pointers using std:pointer
+  4.7 -
+5 - Control Flow
+  5.1 - if, else if and else
+  5.2 - switch statements
+  5.3 - closures
+6 - Loops
+  6.1 - While Loops
+  6.2 - For Loops
+  6.3 - Do-While and For-each loops
+  6.4 - Recursion and the Stack
+7 - Functions
+  7.1 - Functions
+  7.2 - Function Overloading
+  7.3 - Function Pointers and definitions
+  7.4 - Built-In Functions
+  7.5 - Library Functions
+8 - Classes & Objects
+  8.1 - Intro to OOP
+  8.2 - Classes and Objects
+  8.3 - The Constructor and Destructor
+  8.4 - Attributes and Methods
+  8.5 - Inheritance & super keyword
+  8.6 - Blueprints
+  8.7 - Wrapper Classes
+  8.8 - typename
+  8.9 - Factory, Singleton and Adapter
+9 - User-Defined Types
+  9.1 - using Generics
+  9.2 - Functional Applications
+  9.3 - Dynamic Casting
+  9.4 - Dynamic Sizes
+        - For Wrapper Classes like: Stack<class T> name and Dict<class T, class V> name
+10 - Special Operations
+  10.1 - Object Manipulation
+  10.2 - MOV and CPY
+  10.2 1/2 - Libraries
+  10.3 - std:memory
+       sub - using alloc, ralloc, calloc and dalloc
+  10.4 - std:time
+  10.5 - std:structure
+  10.6 - std:algo
+  10.7 - std:thread
+  10.8 - std:sys
+  10.9 - std:window
+11 - files and namespacing
+  11.1 - namespaces
+  11.2 - importing and exporting
+  11.3 - std:file
+  11.4 - file handling
+12 - Networking and Communication
+  12.1 - HTTP Server using std:http,
+  12.2 - API Design using std:sockets and std:thread,
+13 - Additional Info
+  13.1 - Where do we go now?
+  13.2 - The Future
+  13.3 - Acknowledgements
+  13.4 - A Plan in the Works
+End
+
+```
 
 - Official Documentation will be available at: www.kylebrady/klang-docs/book.co.uk
 
@@ -369,6 +481,13 @@ TBD
 - Official Changelog will be available at: www.kylebrady/klang-docs/changes.co.uk
 
 # Authors
-While I will continue to work on this, along with many of my other projects every day, As it grows it becomes more and more
+While I will continue to work on this, along with many of my other projects every day, As it grows it becomes more and more distinct
+in what should and shouldn't be available to us as programmers. And At the same time the more I learn, the more I realize the depth
+and complexity of this pursuit. While I remain learning and coding everyday - I become a much more apt and better developed developer
+In the last few years I saw my skills skyrocket and this was all because of the people around me and the will to create.
+
+KLang at it's best is just another programming language. But for me its been a remarkable adventure one I wish to show off in the future.
+I'm sure in later updates and in a more efficient, optimized state I can finally call it whole. For now however, features and questions remain
+unbuilt. unanswered.
 
 Kyle Brady, Programmer 
