@@ -333,8 +333,11 @@ desktop applications. All tools should be available in one place.
   to make it less convoluted and over-engineered. Hence why OOP in KLang stays relatively simple Objects are just bigger types, Generics and typenames are
   used in regard to these to make dynamic type processing easier.
     
-  
 - Efficient Garbage Collection at Runtime
+  - Allocation of Memory for variables handled via internal System calls.
+  - Object and Smart Pointer Deallocation is handled seemlessly and automcatically.
+  - Objects or Variables that are unused are deallocated.
+  - Memory Safety pertaining to assigned blocks of memory are locked to its signature
 - Expressive Compiler Suggestion and Warning Messages
 - Lightweight and Funtionality Focused
 - Designed for Safe Low-Level Programming that can be utilized where ever it is put.
