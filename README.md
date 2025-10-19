@@ -32,18 +32,32 @@ Sample Program:
 using std:types
 using std:io
 
+// Typename in KLang is used as a sort of Type Sorted. It allows multiple possible types to be stored in a
+// Custom, Allocated Object - Seemlessly All Memory Freeing is done automatically by the garbage collector at
+// runtime and specifying the cleanup() inbuilt function thats included in memory along with: ALLOC, REALLOC, FREE
+typename AnimalType as [string];
+
+// specifies the data your Custom type can hold
+// this is what makes KLang special as custom types can be made as anything
+// since memory can be controlled directly, it makes for a nifty feature
+
+// Note the syntax goes as follows where a list of types that can be taken are listed
+// with ... being like a wildcard for being able to pass any type
+// this means objects are able to be passed making for some cool behaviour we will look into later
+typename Noise as [string];
+
 // Blueprints act almost identical to interfaces
 // Provides for more rigid definitions
 Blueprint Animal {
   // Note only methods that must be defined are needed here
   init();
-  void make_sound();
+  function make_sound();
   destroy();
 }
 
 // Class Definition
 // With Custom Types (Known as Traits in KLang)
-class Animal <AnimalType, Noise> {
+class Animal {
 
   // attribute definitions
   private AnimalType animal_type;
@@ -64,17 +78,17 @@ class Animal <AnimalType, Noise> {
 
   // Methods
 
-  public void make_sound(Noise noise) {
+  public function make_sound(Noise noise) {
     // wrapper class string using the to string method from std:types
     console.print(String.ToString(noise));
   }
 
   // Encapsulation - Getters and Setters
-  public Noise get_noise() {
+  public function get_noise() {
     return noise;
   }
 
-  protected void set_noise(Noise new_noise) {
+  protected function set_noise(Noise new_noise) {
     this.noise = new_noise;
   }
 
@@ -85,16 +99,31 @@ class Animal <AnimalType, Noise> {
 }
 
 class Cat : class Animal {
+  public Noise noise = "Meow";
   // ... Cat inherits behaviour from Animal
+  init(string cat_name, int cat_age, AnimalType animal_types, Noise noise) {
+    super.init(cat_name, cat_age, animal_type);
+    
+  }
 }
 
 // Main function acts as an entry point when labelled with a config label
 
 #config.entry
-main() {
+function start_func() {
 
-  //
-  Animal my_animal = new Animal()
+  // Initializing an Object via the 'new' keyword is allowed
+  // Allocated actions like this on Objects are done on the heap
+  // the freeing on objects is handled automatically with the cleanup function
+
+
+  Animal my_cat = new Cat(); 
+
+  // stack of allocated objects
+  Stack<typename Temp> my_objs_alloc
+
+  // Called for handling Objects at end of life
+  cleanup(Animal);
 }
 
 ```
@@ -220,7 +249,7 @@ desktop applications. All tools should be available in one place.
 
     Functions for Unsigned and Signed integral values are the same.
 
-  - Integers:
+  - Integers (class Int):
     - `ToFloat(int input)`,
     - `ToDouble(int input)`,
     - `ToString(int input)`,
@@ -228,10 +257,14 @@ desktop applications. All tools should be available in one place.
     - `MaxSize(int input)`,
     - `MinSize(int input)`,
    
-  - Decimals (Floats and Doubles):
+  - Decimals (class Float and class Double):
     - `ToString()`,
     - `ToInt()`,
     - `ToChar()`,
+    - For Floats
+      - `ToDouble()`,
+    - For Doubles
+      - `ToFloat()`,
     - `MaxSize(`,
     - `MinSize()`,
     - `Round(decimal, figure)`,
@@ -243,7 +276,42 @@ desktop applications. All tools should be available in one place.
     - `MaxSize()`,
     - `MinSize()`,
     - `Round(decimal, figure)`,
-        
+   
+- Generic Typing System:
+  - the `typename` keyword is used to give a type an alias and restrictions on the type it can be passed when initialized
+  - i.e `typename MyType as [string, int];` means MyType can Legally be assigned exclusively the types string and int.
+ 
+  - Generic types in functions, classes and variables require simply a '<>' of brackets with the class keyword. As each
+    User-Defined type if you will is stored and created as an empty object.
+
+  - Structs and Enums are to be added in later patches as the language just doesn't require them at the moment
+
+  `
+  // If nothing is passed when an object is made - Custom types collapse into void
+  class Vehicle<class Type, class Model> {
+    public string year;
+    public bool is_new;
+    public Type car_type;
+    public Model car_model;
+
+    init(string year, Type car_type, Model car_model) {
+      this.year = year;
+      this.is_new = true;
+      this.car_type = car_type;
+      this.car_model = car_model;
+    }
+
+    ...
+  }
+    
+  `
+- Making OOP more presentable and less of a spaghetti mess was a primary goal and only including useful and elegant features as solutions was the only way
+  to make it less convoluted and over-engineered. Hence why OOP in KLang stays relatively simple Objects are just bigger types, Generics and typenames are
+  used in regard to these to make dynamic type processing easier.
+    
+  
+- Efficient Garbage Collection at Runtime
+- Expressive Compiler Suggestion and Warning Messages
 - Lightweight and Funtionality Focused
 - Designed for Safe Low-Level Programming that can be utilized where ever it is put.
 - Powerfully Enhanced Error handling: From descriptive error messages that don't leave the
@@ -301,5 +369,6 @@ TBD
 - Official Changelog will be available at: www.kylebrady/klang-docs/changes.co.uk
 
 # Authors
+While I will continue to work on this, along with many of my other projects every day, As it grows it becomes more and more
 
-Kyle Brady
+Kyle Brady, Programmer 
