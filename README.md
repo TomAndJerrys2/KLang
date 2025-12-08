@@ -78,14 +78,14 @@ class Animal {
     this._age = _age;
     this.animal_type = _animal_type;
 
-    console.print("Object Initialized\n");
+    io.write("Object Initialized\n");
   }
 
   // Methods
 
   public function make_sound(Noise noise) {
     // wrapper class string using the to string method from std:types
-    console.print(String.ToString(noise));
+    io.write(String.ToString(noise));
   }
 
   // Encapsulation - Getters and Setters
@@ -108,7 +108,6 @@ class Cat : class Animal {
   // ... Cat inherits behaviour from Animal
   init(string cat_name, int cat_age, AnimalType animal_types, Noise noise) {
     super.init(cat_name, cat_age, animal_type);
-    
   }
 }
 
