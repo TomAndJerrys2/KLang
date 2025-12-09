@@ -1,6 +1,8 @@
-# KLang
+# KLang 
 
 # <i>A Mid-Level, Multi-functional Language</i>
+
+<img width="219" height="443" alt="image" src="https://github.com/user-attachments/assets/c4640588-8546-4970-9a8f-d06b93d026ad" />
 
 > [!WARNING]
 > KLang does work on Linux and Windows Systems - However it requires you to have GCC available
