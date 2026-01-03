@@ -169,31 +169,30 @@ static void binary()
 
     switch (operator_type)
     {
-    case TOKEN_BANG_EQUAL:
-        emit_bytes(OP_EQUAL, OP_NOT);
-        break;
-    case TOKEN_EQUAL_EQUAL:
-        emitByte(OP_EQUAL);
-        break;
-    case TOKEN_GREATER:
-        emitByte(OP_GREATER);
-        break;
-    case TOKEN_GREATER_EQUAL:
-        emit_bytes(OP_LESS, OP_NOT);
-        break;
-    case TOKEN_LESS:
-        emitByte(OP_LESS);
-        break;
-    case TOKEN_LESS_EQUAL:
-        emit_bytes(OP_GREATER, OP_NOT);
-        break;
+    	case TOKEN_BANG_EQUAL:
+        	emit_bytes(OP_EQUAL, OP_NOT);
+        	break;
+    	case TOKEN_EQUAL_EQUAL:
+        	emitByte(OP_EQUAL);
+        	break;
+    	case TOKEN_GREATER:
+        	emitByte(OP_GREATER);
+        	break;
+    	case TOKEN_GREATER_EQUAL:
+        	emit_bytes(OP_LESS, OP_NOT);
+       		 break;
+    	case TOKEN_LESS:
+        	emitByte(OP_LESS);
+        	break;
+   	case TOKEN_LESS_EQUAL:
+       	 	emit_bytes(OP_GREATER, OP_NOT);
+        	break;
 
-    case TOKEN_PLUS:
-        emit_byte(OP_ADD);
-        break;
+    	case TOKEN_PLUS:
+        	emit_byte(OP_ADD);
+        	break;
 
-    default:
-        return; // Unreachable.
+    	default: return; // Unreachable.
     }
 }
 

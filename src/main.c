@@ -13,17 +13,13 @@ int main(int argc, const char *argv[])
     init_machine();
 
     if (argc == 1)
-    {
         repl();
-    }
+    
     else if (argc == 2)
-    {
         runFile(argv[1]);
-    }
+    
     else
-    {
         fprintf(stderr, "Usage: Klang [path]\n");
-    }
 
     // # add a cleanup function
     free_machine();

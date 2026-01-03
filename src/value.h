@@ -13,7 +13,6 @@ typedef enum
     VAL_NUMBER,
 
     VAL_OBJ,
-
 } ValueType;
 
 typedef struct
